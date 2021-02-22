@@ -9,22 +9,26 @@ const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 const controller = {
 	// Root - Show all products
 	index: (req, res) => {
-		// Do the magic
-	},
+		let everyProduct =[];
+		products.map(product =>{
+			product.price = toThousand(product.price);
+			everyProduct.push (product);
+		})
+		return res.render('products', { everyProduct });
 
-	// Product list
-	products: (req, res) => {
-		// Do the magic
-	},
-
+		},
 	// Detail - Detail from one product
 	detail: (req, res) => {
-		// Do the magic
+		let product = products.find (product => (product.id== req.params.id));
+		product.finalPrice = product.discount >0 ? (product.price - (product.discount*product.price/100)) : product.price;
+		product.price = toThousand(product.price);
+		product.finalPrice = toThousand(product.finalPrice);
+		return res.render('detail', {product});
 	},
 
 	// Create - Form to create
 	create: (req, res) => {
-		// Do the magic
+		res.render ("product-create-form");
 	},
 	
 	// Create -  Method to store
@@ -32,18 +36,19 @@ const controller = {
 		// Do the magic
 	},
 
-	// Update - Form to edit
+	// Update - Form to edit / aca devuelvo el que el usuario quiere editar
 	edit: (req, res) => {
-		// Do the magic
+		let product = products.find (product => (product.id== req.params.id));
+		res.render ("product-edit-form", {product});
 	},
 	// Update - Method to update
 	update: (req, res) => {
-		// Do the magic
+		res.send("Lo actualizamos");
 	},
 
 	// Delete - Delete one product from DB
 	destroy : (req, res) => {
-		// Do the magic
+		res.send ("Lo borramos");
 	}
 };
 

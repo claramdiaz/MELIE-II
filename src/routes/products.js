@@ -19,12 +19,14 @@ router.post('/', productsController.store);
 router.get('/:id/', productsController.detail); 
 
 /*** EDIT ONE PRODUCT ***/ 
-router.get('/:id/edit', productsController.edit); 
+// la primera es para el formulario que va a editar y la segunda es para el actualizacion de los datos.
+
+router.get('/edit/:id', productsController.edit); 
 router.put('/:id', productsController.update); 
 
 
 /*** DELETE ONE PRODUCT***/ 
-router.delete('/:id', productsController.destroy); 
+router.delete('/delete/:id', productsController.destroy); 
 
 
 
